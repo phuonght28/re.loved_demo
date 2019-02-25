@@ -6,3 +6,12 @@ node_modules/
 npm-debug.log
 yarn-error.log
 
+src/stores/.DS_Store
+src/containers/Home/.DS_Store
+src/containers/Buy/.DS_Store
+src/containers/Account/.DS_Store
+src/containers/.DS_Store
+src/assets/fonts/.DS_Store
+src/assets/.DS_Store
+src/.DS_Store
+.DS_Store

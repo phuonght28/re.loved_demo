@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Image, StyleSheet, TouchableOpacity, Text, ScrollView, Animated, ImageBackground, TextInput } from 'react-native';
+import { View, Image, StyleSheet, TouchableOpacity, Text, Animated, TextInput } from 'react-native'
 import { PRODUCTS } from '../../fakeApi/product';
 import { Block_Category, Block_ListProducts } from '../../components/home'
 import { homeStyle } from './style'
@@ -14,6 +14,7 @@ const HEADER_MAX_HEIGHT = 356;
 const HEADER_MIN_HEIGHT = 0
 const HEADER_SCROLL_DISTANCE = HEADER_MAX_HEIGHT - HEADER_MIN_HEIGHT;
 const AnimatedFastImage = Animated.createAnimatedComponent(Image);
+
 
 class Home extends React.Component {
   state = {

@@ -91,11 +91,11 @@ export const textH4 = { fontSize: fontSizeH4, };
 export const titleFontSize = fontSize + 2;
 export const titleTextColor = "#0D3D74";
 export const shadow = {
-  elevation: 1,
-  shadowColor: "rgba(0,0,0, 0.2)",
+  elevation: 10,
+  shadowColor: "#000",
   shadowOffset: { width: 1, height: 1 },
   shadowOpacity: 0.5,
-  shadowRadius: 5,
+  shadowRadius: 4,
   // marginBottom: 15
 };
 export const shadowCustom = (props) => ({
@@ -103,8 +103,8 @@ export const shadowCustom = (props) => ({
   shadowColor: (props && props.color) ? props.color : "#000",
   shadowOffset: (props && props.offset) ? props.offset : { width: 1, height: 1 },
   shadowOpacity: (props && props.opacity) ? props.opacity : 0.5,
-  shadowRadius: (props && props.radius) ? props.radius : 4,
-  elevation: (props && props.elevation) ? props.elevation : 10,
+  shadowRadius: (props && props.radius) ? props.radius : 3,
+  elevation: (props && props.elevation) ? props.elevation : 5,
 })
 // export const shadowProperties = {
 //   shadowColor: '#1a1917',

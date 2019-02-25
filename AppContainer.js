@@ -66,7 +66,7 @@ class SearchRouterButton extends Component {
             width: SIZE,
             height: SIZE,
             borderRadius: SIZE / 2,
-            marginBottom: 30,
+            marginBottom: 25,
           }}
         >
           <Animated.View style={{ transform: [{ rotate: rotation }] }}>

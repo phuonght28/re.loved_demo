@@ -1,12 +1,15 @@
 import React from 'react'
 import { Header } from 'react-navigation'
-import { Block_Category } from '../../components/home'
-import { View, Image, StyleSheet, TouchableOpacity, Text, Animated } from 'react-native'
-import { brandPrimary, brandLight, textLightColor, isIphoneX, platform, DEVICE_WIDTH, shadow } from '../../config/variables';
+import { PRODUCTS } from '../../fakeApi/product'
+import Block_Item from '../../components/common/Block_Item'
+import { View, Image, StyleSheet, TouchableOpacity, Text, Animated, ImageBackground } from 'react-native'
+import { brandPrimary, brandLight, textLightColor, isIphoneX, platform, DEVICE_WIDTH, shadow, shadowCustom } from '../../config/variables';
 import Ionicons from "react-native-vector-icons/Ionicons"
+import SimpleLineIcons from "react-native-vector-icons/SimpleLineIcons"
+
 
 const STATUSBAR_PADDING = isIphoneX ? 24 : 0
-const HEADER_MAX_HEIGHT = 250
+const HEADER_MAX_HEIGHT = 580
 const HEADER_MIN_HEIGHT = Header.HEIGHT + STATUSBAR_PADDING
 const HEADER_SCROLL_DISTANCE = HEADER_MAX_HEIGHT - HEADER_MIN_HEIGHT
 const AnimatedFastImage = Animated.createAnimatedComponent(Image)
@@ -56,32 +59,79 @@ class Account extends React.Component {
       outputRange: [0, 0, -8],
       extrapolate: 'clamp',
     })
+    const item = {
+      name: 'Chanel',
+      category: 'Iconic Handbag',
+      price: '$26',
+      image: 'https://www.chanel.com/images/t_fashion/q_auto,f_jpg,fl_lossy,dpr_2/w_1920/large-boy-chanel-handbag-charcoal-grained-calfskin-ruthenium-finish-metal-grained-calfskin-ruthenium-finish-metal-packshot-alternative-a92193y333765b459-8807152549918.jpg',
+      type: 'new'
+    }
     return (
       <View style={styles.container} >
+        <ImageBackground style={[StyleSheet.absoluteFill]} source={require('../../assets/profile_bg.jpg')} />
         <Animated.ScrollView
           onScroll={Animated.event([{ nativeEvent: { contentOffset: { y: this.state.scrollY } } }], { useNativeDriver: true })}
           contentInset={{ top: HEADER_MAX_HEIGHT, }}
           contentOffset={{ y: -HEADER_MAX_HEIGHT, }}
           style={{ flex: 1 }} scrollEventThrottle={1} >
           <View style={styles.scrollViewContent}>
+
+            <View style={styles.blockFllowers}>
+              <View style={{
+                flexDirection: 'row', justifyContent: 'space-between', alignContent: 'space',
+                marginHorizontal: 40, marginBottom: 15
+              }}>
+                <View style={{ flex: 0.3 }}>
+                  <Text style={{ color: '#FFF', fontWeight: '700' }}>1.2k</Text>
+                  <Text style={{ color: '#FFF' }}>followers</Text>
+                </View>
+                <View style={{ flex: 0.3 }}>
+                  <Text style={{ color: '#FFF', textAlign: 'center', fontWeight: '700' }}>248</Text>
+                  <Text style={{ color: '#FFF', textAlign: 'center' }}>items</Text>
+                </View>
+                <View style={{ flex: 0.3 }}>
+                  <Text style={{ color: '#FFF', textAlign: 'right', fontWeight: '700' }}>1.2k</Text>
+                  <Text style={{ color: '#FFF', textAlign: 'right' }}>following</Text>
+                </View>
+              </View>
+            </View>
             <View style={styles.blockContainer}>
-              <Block_Category />
+              <View style={[shadowCustom({ offset: { width: 0, height: -1 } }), { alignSelf: 'center', width: 100, height: 5, borderRadius: 5, backgroundColor: '#D73636', marginBottom: 20 }]}></View>
+
+              <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-between', marginBottom: 20, marginHorizontal: 15 }} >
+                <View>
+                  <Text style={{ fontSize: 18, lineHeight: 30 }}>USERNAME</Text>
+                  <Text style={{ color: '#9B9B9B' }}>Country, City</Text>
+                </View>
+                <TouchableOpacity activeOpacity={1}>
+                  <Text style={{
+                    borderColor: '#D73636', borderWidth: 2, borderRadius: 16, fontWeight: '600',
+                     paddingHorizontal: 20, color: '#D73636', lineHeight: 30
+                  }}>FOLLOW</Text>
+                </TouchableOpacity >
+              </View>
+              <View style={{ flexDirection: 'row', flex: 1 }} >
+                <Block_Item item={item} />
+                <Block_Item item={item} />
+              </View>
             </View>
           </View>
         </Animated.ScrollView>
 
         <Animated.View style={[styles.header, { transform: [{ translateY: headerTranslate }] }]} >
-          <AnimatedFastImage
+          {/* <AnimatedFastImage
             style={[styles.backgroundImage, { opacity: imageOpacity, transform: [{ translateY: imageTranslate }] }]}
-            source={require('../../assets/profile_bg.jpg')} />
+            source={require('../../assets/profile_bg.jpg')} /> */}
         </Animated.View>
-        <Animated.View style={[styles.barIcon, { transform: [{ translateY: titleTranslate }] }]}   >
-          <TouchableOpacity style={{ marginLeft: 9, width: 50 }} onPress={() => { this.props.navigation.goBack() }}>
-            <Ionicons name={'ios-arrow-back'} style={{ color: brandPrimary, fontSize: 34 }} />
+        <Animated.View style={[styles.barIcon, { transform: [{ scale: titleScale }, { translateY: titleTranslate }] }]}  >
+          <TouchableOpacity style={{ marginLeft: 10 }} onPress={() => { this.props.navigation.goBack() }}>
+            <Ionicons name={'ios-arrow-back'} style={{ color: '#FFF', fontSize: 34 }} />
           </TouchableOpacity>
         </Animated.View>
-        <Animated.View style={[styles.bar, { transform: [{ scale: titleScale }, { translateY: titleTranslate }] }]} >
-          <Text style={styles.title} numberOfLines={1}>{'Profile'}</Text>
+        <Animated.View style={[styles.barIconRight, { transform: [{ translateY: titleTranslate }] }]}   >
+          <TouchableOpacity style={{ marginRight: 10 }} >
+            <SimpleLineIcons name={'handbag'} style={{ color: '#FFF', fontSize: 34 }} />
+          </TouchableOpacity>
         </Animated.View>
       </View>
     )
@@ -93,22 +143,29 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#f7f7f7',
   },
+  blockFllowers: {
+    backgroundColor: 'transparent',
+  },
   blockContainer: {
+    backgroundColor: '#f7f7f7',
     ...shadow,
     padding: 15,
-    backgroundColor: brandLight,
-    marginBottom: 15,
+    marginHorizontal: 8,
+    paddingBottom: 250,
+    borderTopRightRadius: 30,
+    borderTopLeftRadius: 30,
     shadowRadius: 1,
     shadowOpacity: 0.05,
-    shadowOffset: { width: 0, height: 1 }
+    shadowOffset: { width: 0, height: 1 },
+    flex: 1
   },
   header: {
+    backgroundColor: 'transparent',
     position: 'absolute',
     elevation: 5,
     top: 0,
     left: 0,
     right: 0,
-    backgroundColor: '#03A9F4',
     overflow: 'hidden',
     height: HEADER_MAX_HEIGHT,
   },
@@ -146,6 +203,19 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
   },
+  barIconRight: {
+    zIndex: 1,
+    backgroundColor: 'transparent',
+    marginTop: (platform === 'ios' ? 32 : 18) + STATUSBAR_PADDING,
+    elevation: 5,
+    alignItems: 'flex-end',
+    justifyContent: 'flex-end',
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+
+  },
   title: {
     fontSize: platform === 'ios' ? 21 : 25,
     maxWidth: DEVICE_WIDTH - 60,
@@ -155,6 +225,7 @@ const styles = StyleSheet.create({
   scrollViewContent: {
     // iOS uses content inset, which acts like padding.
     paddingTop: platform !== 'ios' ? HEADER_MAX_HEIGHT : 0,
+    flex: 1
   },
   row: {
     height: 40,
