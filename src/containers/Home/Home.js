@@ -1,13 +1,10 @@
-import React from 'react';
+import React from 'react'
 import { View, Image, StyleSheet, TouchableOpacity, Text, Animated, TextInput } from 'react-native'
 import { PRODUCTS } from '../../fakeApi/product';
 import { Block_Category, Block_ListProducts } from '../../components/home'
 import { homeStyle } from './style'
-import Feather from "react-native-vector-icons/Feather";
-import {
-  brandPrimary, brandLight, textLightColor, Bodoni_Bold,
-  isIphoneX, platform, DEVICE_WIDTH, DEVICE_W_percent, brandSecondary,
-} from '../../config/variables';
+import Feather from "react-native-vector-icons/Feather"
+import { brandPrimary, isIphoneX, platform, shadowCustom } from '../../config/variables'
 
 const STATUSBAR_PADDING = isIphoneX ? 24 : 0
 const HEADER_MAX_HEIGHT = 356;
