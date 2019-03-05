@@ -4,6 +4,7 @@ import { createAppContainer, createSwitchNavigator, createStackNavigator, create
 import { AsyncStorage, StatusBar, Button, Animated, TouchableHighlight, View, ActivityIndicator } from 'react-native'
 import { Home } from './src/containers/Home'
 import { Account } from './src/containers/Account'
+import { Category } from './src/containers/Buy'
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import Feather from "react-native-vector-icons/Feather";
 import { shadowCustom } from './src/config/variables';
@@ -158,7 +159,7 @@ const HomeStack = createStackNavigator(
 )
 const HangerStack = createStackNavigator(
   {
-    HangerScreen: { screen: Home }
+    Category: { screen: Category }
   },
   { headerMode: "none", }
 )
@@ -186,6 +187,7 @@ const MainStack = createBottomTabNavigator(
     Account: AccountStack,
   },
   {
+    initialRouteName: 'Hanger',
     defaultNavigationOptions: ({ navigation }) => ({
       // tabBarComponent: MyTabBar,
       animationEnabled: false,
