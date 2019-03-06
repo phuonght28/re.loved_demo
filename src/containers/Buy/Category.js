@@ -1,18 +1,30 @@
 import React, { Component } from 'react'
-import { Platform, View, Image, StyleSheet, TouchableOpacity, Text, Animated, FlatList, List, ListItem } from 'react-native'
+import { Platform, View, Image, StyleSheet, TouchableOpacity, Text, Animated, FlatList, List, ListItem, LayoutAnimation } from 'react-native'
 import { Header } from 'react-navigation'
 import { PRODUCTS } from '../../fakeApi/product'
-import { MultiSelect } from '../../components/common/'
-import { brandPrimary, brandLight } from '../../config/variables'
+import { CATEGORY } from '../../fakeApi/category'
+import { brandPrimary, brandLight, textLightColor, isIphoneX, platform, DEVICE_WIDTH, shadow, shadowCustom } from '../../config/variables';
+
 import Ionicons from "react-native-vector-icons/Ionicons"
 import AntDesign from "react-native-vector-icons/AntDesign"
-import { CATEGORY } from '../../fakeApi/category'
 
-const AnimatedFastImage = Animated.createAnimatedComponent(Image)
+const STATUSBAR_PADDING = isIphoneX ? 24 : 0
+const HEADER_MAX_HEIGHT = 580
+const HEADER_MIN_HEIGHT = Header.HEIGHT + STATUSBAR_PADDING
+const HEADER_SCROLL_DISTANCE = HEADER_MAX_HEIGHT - HEADER_MIN_HEIGHT
 
-const Item_MAX_HEIGHT = 356;
-const HEADER_MIN_HEIGHT = 0
+
 class Category extends React.Component {
+
+  constructor() {
+    super()
+    this.state = {
+      expanded: false,
+      scrollY: new Animated.Value(
+        platform === 'ios' ? -HEADER_MAX_HEIGHT : 0,
+      ),
+    }
+  }
   static navigationOptions = ({ navigation }) => {
     return {
       headerLeft: (
@@ -22,6 +34,10 @@ class Category extends React.Component {
         </TouchableOpacity>
       ),
     }
+  }
+  changeLayout = () => {
+    LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
+    this.setState({ expanded: !this.state.expanded });
   }
   renderItem = ({ item }) => (
     <View>
@@ -48,8 +64,38 @@ class Category extends React.Component {
   )
   renderSeparator = () => (<View style={{ width: "100%", height: 1, backgroundColor: "#ECECEC" }} />)
   render() {
+
+    const scrollY = Animated.add(
+      this.state.scrollY,
+      platform === 'ios' ? HEADER_MAX_HEIGHT : 0,
+    )
+    const headerTranslate = scrollY.interpolate({
+      inputRange: [0, HEADER_SCROLL_DISTANCE],
+      outputRange: [0, -HEADER_SCROLL_DISTANCE],
+      extrapolate: 'clamp',
+    })
     return (
       <View style={styles.container} >
+
+        <View>
+          <TouchableOpacity activeOpacity={0.8} onPress={this.changeLayout} style={styles.Btn}>
+            <Text >Expand / Collapse</Text>
+          </TouchableOpacity>
+          <View style={{ height: this.state.expanded ? null : 0, overflow: 'hidden' }}>
+            <Text style={styles.text}>
+              Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+              Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
+              when an unknown printer took a galley of type and scrambled it to make a type specimen book.
+              It has survived not only five centuries, but also the leap into electronic typesetting,
+              remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets
+              containing Lorem Ipsum passages, and more recently with desktop publishing software
+              like Aldus PageMaker including versions of Lorem Ipsum.
+          </Text>
+          </View>
+        </View>
+
+
+
         <FlatList
           style={{
             backgroundColor: '#FFF',
