@@ -1,17 +1,19 @@
 
 import React, { Component } from 'react'
 import { createAppContainer, createSwitchNavigator, createStackNavigator, createBottomTabNavigator } from 'react-navigation'
-import { AsyncStorage, StatusBar, Button, Animated, TouchableHighlight, View, ActivityIndicator } from 'react-native'
+import { AsyncStorage, StatusBar, Button, Animated, TouchableHighlight, TouchableOpacity, View, ActivityIndicator } from 'react-native'
 import { Home } from './src/containers/Home'
 import { Account } from './src/containers/Account'
 import { Category } from './src/containers/Buy'
-import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
-import Feather from "react-native-vector-icons/Feather";
-import { shadowCustom } from './src/config/variables';
+import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons"
+import Feather from "react-native-vector-icons/Feather"
+import SimpleLineIcons from "react-native-vector-icons/SimpleLineIcons"
+
+import { shadowCustom } from './src/config/variables'
 
 
 
-const SIZE = 60;
+const SIZE = 60
 
 class HangerRouterButton extends Component {
   render() {
@@ -35,22 +37,22 @@ class HangerRouterButton extends Component {
           <MaterialCommunityIcons name={'hanger'} style={{ color: 'red', fontSize: 36 }} />
         </TouchableHighlight>
       </View>
-    );
+    )
   }
 }
 class SearchRouterButton extends Component {
-  mode = new Animated.Value(0);
+  mode = new Animated.Value(0)
   toggleView = () => {
     Animated.timing(this.mode, {
       toValue: this.mode._value === 0 ? 1 : 0,
       duration: 300
-    }).start();
-  };
+    }).start()
+  }
   render() {
     const rotation = this.mode.interpolate({
       inputRange: [0, 1],
       outputRange: ['0deg', '45deg']
-    });
+    })
     return (
       <View style={{
         position: 'absolute',
@@ -76,7 +78,7 @@ class SearchRouterButton extends Component {
           </Animated.View>
         </TouchableHighlight>
       </View>
-    );
+    )
   }
 }
 const BottomTabButton = (props) => {
@@ -115,7 +117,7 @@ class MyTabBar extends Component {
           <BottomTabButton routeName={'Account'} />
         </View>
       </View>
-    );
+    )
   }
 }
 
@@ -151,6 +153,22 @@ class OtherScreen extends React.Component {
   }
 }
 
+const headerOptions = {
+  headerTintColor: '#000',
+  headerBackTitle: null,
+  headerTitleStyle: {
+    color: '#000'
+  },
+  headerStyle: {
+    borderBottomWidth: 0.5,
+    backgroundColor: '#FFF',
+  },
+  headerRight: (
+    <TouchableOpacity style={{ paddingHorizontal: 20, alignItems: 'center' }}>
+      <SimpleLineIcons name={'handbag'} style={{ color: '#000', fontSize: 28 }} />
+    </TouchableOpacity>
+  )
+}
 const HomeStack = createStackNavigator(
   {
     HomeScreen: { screen: Home },
@@ -159,9 +177,14 @@ const HomeStack = createStackNavigator(
 )
 const HangerStack = createStackNavigator(
   {
-    Category: { screen: Category }
-  },
-  { headerMode: "none", }
+    Category: {
+      screen: Category,
+      navigationOptions: {
+        ...headerOptions,
+        title: 'YOUR NEXT PRELOVED'
+      }
+    },
+  }
 )
 const SearchStack = {
   screen: () => null,
@@ -210,8 +233,8 @@ const MainStack = createBottomTabNavigator(
         }
       },
       tabBarIcon: ({ focused, horizontal, tintColor }) => {
-        const { routeName } = navigation.state;
-        let iconSize = 28;
+        const { routeName } = navigation.state
+        let iconSize = 28
         let iconName = routeName === 'Home' ? 'home-outline' :
           routeName === 'Hanger' ? 'hanger' :
             routeName === 'Search' ? 'magnify' :

@@ -4,32 +4,57 @@ import { Header } from 'react-navigation'
 import { PRODUCTS } from '../../fakeApi/product'
 import { MultiSelect } from '../../components/common/'
 import { brandPrimary, brandLight } from '../../config/variables'
-const CATEGORY = [
-  { key: 'clothing', title: 'Clothing' },
-  { key: 'shoes', title: 'Shoes' },
-  { key: 'jewelry', title: 'Jewelry' },
-  { key: 'watches', title: 'Watches' },
-  { key: 'handbags', title: 'Handbags' },
-  { key: 'wallets', title: 'Wallets' },
-  { key: 'accessories', title: 'Accessories' },
-  { key: 'bags', title: 'Bags' },
-]
-class Category extends React.Component {
-  renderItem = ({ item }) => {
-    return (
-      <TouchableOpacity>
-        <Text >{item.title}</Text>
-      </TouchableOpacity>
-    )
-  }
-  renderSeparator = () => {
-    return (<View style={{ width: "86%", height: 1, backgroundColor: "#CED0CE", marginLeft: "14%" }} />)
-  }
+import Ionicons from "react-native-vector-icons/Ionicons"
+import AntDesign from "react-native-vector-icons/AntDesign"
+import { CATEGORY } from '../../fakeApi/category'
 
+const Item_MAX_HEIGHT = 356;
+const HEADER_MIN_HEIGHT = 0
+class Category extends React.Component {
+  static navigationOptions = ({ navigation }) => {
+    return {
+      headerLeft: (
+        <TouchableOpacity onPress={() => navigation.goBack(null)}
+          style={{ paddingHorizontal: 10, alignItems: 'center' }}>
+          <Ionicons name={"ios-arrow-back"} style={{ color: '#000', fontSize: 28 }} />
+        </TouchableOpacity>
+      ),
+    }
+  }
+  renderItem = ({ item }) => (
+    <View>
+      <TouchableOpacity style={{ flexDirection: 'row', justifyContent: 'space-between' }} >
+        <Text style={{ color: '#000', lineHeight: 50, fontSize: 20, fontWeight: '400' }} >{item.title}</Text>
+        <AntDesign style={{ color: '#000', lineHeight: 50, fontSize: 24, fontWeight: '400' }} name={"plus"} />
+      </TouchableOpacity>
+      <View>
+        {item.child && item.child.length &&
+          <FlatList
+            style={{ paddingLeft: '8%' }}
+            data={item.child}
+            keyExtractor={item => item.key}
+            renderItem={({ item }) => (
+              <TouchableOpacity style={{ flexDirection: 'row', justifyContent: 'space-between' }} >
+                <Text style={{ color: '#000', lineHeight: 50, fontSize: 20, fontWeight: '400' }} >{item.title}</Text>
+              </TouchableOpacity>
+            )}
+            ItemSeparatorComponent={this.renderSeparator}
+          />
+        }
+      </View>
+    </View>
+  )
+  renderSeparator = () => (<View style={{ width: "100%", height: 1, backgroundColor: "#ECECEC" }} />)
   render() {
     return (
       <View style={styles.container} >
         <FlatList
+          style={{
+            backgroundColor: '#FFF',
+            paddingHorizontal: '8%',
+            paddingTop: 30,
+            flex: 1,
+          }}
           data={CATEGORY}
           keyExtractor={item => item.key}
           renderItem={this.renderItem}
@@ -42,7 +67,8 @@ class Category extends React.Component {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#f7f7f7',
+    backgroundColor: '#F4F4F4',
+    backgroundColor: '#FFF',
     flex: 1,
   },
 })
