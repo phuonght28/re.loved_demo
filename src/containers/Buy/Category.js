@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View, Image, StyleSheet, TouchableOpacity, Text, Animated, FlatList, List, ListItem } from 'react-native'
+import { Platform, View, Image, StyleSheet, TouchableOpacity, Text, Animated, FlatList, List, ListItem } from 'react-native'
 import { Header } from 'react-navigation'
 import { PRODUCTS } from '../../fakeApi/product'
 import { MultiSelect } from '../../components/common/'
@@ -7,6 +7,8 @@ import { brandPrimary, brandLight } from '../../config/variables'
 import Ionicons from "react-native-vector-icons/Ionicons"
 import AntDesign from "react-native-vector-icons/AntDesign"
 import { CATEGORY } from '../../fakeApi/category'
+
+const AnimatedFastImage = Animated.createAnimatedComponent(Image)
 
 const Item_MAX_HEIGHT = 356;
 const HEADER_MIN_HEIGHT = 0
@@ -52,7 +54,7 @@ class Category extends React.Component {
           style={{
             backgroundColor: '#FFF',
             paddingHorizontal: '8%',
-            paddingTop: 30,
+            paddingTop: '8%',
             flex: 1,
           }}
           data={CATEGORY}
@@ -71,9 +73,28 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFF',
     flex: 1,
   },
-})
+  text: {
+    fontSize: 17,
+    color: 'black',
+    padding: 10
+  },
 
+  btnText: {
+    textAlign: 'center',
+    color: 'white',
+    fontSize: 20
+  },
 
+  btnTextHolder: {
+    borderWidth: 1,
+    borderColor: 'rgba(0,0,0,0.5)'
+  },
+
+  Btn: {
+    padding: 10,
+    backgroundColor: 'rgba(0,0,0,0.5)'
+  }
+});
 
 
 export default Category
