@@ -86,6 +86,7 @@ const stylesItem = StyleSheet.create({
     borderRadius: 5,
     width: ITEM_W,
     marginLeft: PADDING15,
+    marginVertical: PADDING15,
   },
   categories: { width: 70, height: 20, borderWidth: 1, borderRadius: 12, borderColor: brandSecondary },
   categoriesText: { fontSize: 13, lineHeight: 20, textAlign: 'center', color: brandSecondary },

@@ -1,5 +1,14 @@
-export const  CATEGORY = [
-  { key: 'bestseller', title: 'Best Seller' },
+export const CATEGORY = [
+  {
+    key: 'bestseller', title: 'Best Seller',
+    child: [
+      { key: 'EARRINGS', title: 'EARRINGS' },
+      { key: 'NECKLACES', title: 'NECKLACES' },
+      { key: 'BRACELETS', title: 'BRACELETS' },
+      { key: 'RINGS', title: 'RINGS' },
+      { key: 'STERLING', title: 'STERLING' },
+    ]
+  },
   { key: 'all', title: 'See all' },
   { key: 'clothing', title: 'Clothing' },
   { key: 'shoes', title: 'Shoes' },

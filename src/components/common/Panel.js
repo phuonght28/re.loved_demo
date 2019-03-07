@@ -1,69 +1,62 @@
 import React, { Component } from 'react'
-import { StyleSheet, Text, View, Image, TouchableHighlight, Animated } from 'react-native'
+import { StyleSheet, Text, View, TouchableOpacity, UIManager, Animated, Easing } from 'react-native'
+import AntDesign from "react-native-vector-icons/AntDesign"
+import { SourceSansPro_Regular } from '../../config/variables'
 
+if (UIManager.setLayoutAnimationEnabledExperimental) {
+	UIManager.setLayoutAnimationEnabledExperimental(true)
+}
 
-import SimpleLineIcons from "react-native-vector-icons/SimpleLineIcons"
 class Panel extends Component {
 	constructor(props) {
 		super(props)
 		this.state = {
-			title: props.title,
-			expanded: true
+			expanded: false,
+			maxHeight: 0,
+			minHeight: 0,
+			animation: new Animated.Value(52)
 		}
 	}
-	toggle() {
 
+	shouldComponentUpdate() {
+		return true
+	}
+
+	_setMaxHeight(event) { this.setState({ maxHeight: event.nativeEvent.layout.height }) }
+	_setMinHeight(event) { this.setState({ minHeight: event.nativeEvent.layout.height }) }
+
+	toggle() {
+		let initialValue = this.state.expanded ? this.state.maxHeight + this.state.minHeight : this.state.minHeight,
+			finalValue = this.state.expanded ? this.state.minHeight : this.state.maxHeight + this.state.minHeight
+
+		this.setState({
+			expanded: !this.state.expanded
+		}, () => {
+			this.state.animation.setValue(initialValue)
+			Animated.timing(
+				this.state.animation,
+				{
+					toValue: finalValue,
+					duration: 200,
+					easing: Easing.linear
+				}
+			).start()
+		})
 	}
 	render() {
 		return (
-			<View style={styles.container} >
-				<View style={styles.titleContainer}>
-					<Text style={styles.title}>{this.state.title}</Text>
-					<TouchableHighlight
-						style={styles.button}
-						onPress={this.toggle.bind(this)}
-						underlayColor="#f1f1f1">
-						{this.state.expanded ?
-							<SimpleLineIcons style={{ color: '#000', lineHeight: 50, fontSize: 24, fontWeight: '400' }} name={"arrow-up"} /> :
-							<SimpleLineIcons style={{ color: '#000', lineHeight: 50, fontSize: 24, fontWeight: '400' }} name={"arrow-down"} />
-						}
-					</TouchableHighlight>
+			<Animated.View style={{ backgroundColor: '#FFF', overflow: 'hidden', height: this.state.animation }}>
+				<View onLayout={this._setMinHeight.bind(this)}>
+					<TouchableOpacity onPress={this.toggle.bind(this)} style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+						<Text style={{ color: this.state.expanded ? `#D40000` : `#000`, lineHeight: 50, fontSize: 20, fontWeight: '400', fontFamily: SourceSansPro_Regular }} numberOfLine={1} adjustsFontSizeToFit>{this.props.title}</Text>
+						<AntDesign style={{ color: '#000', lineHeight: 50, fontSize: 24, fontWeight: '400' }} name={this.state.expanded ? `minus` : `plus`} />
+					</TouchableOpacity>
 				</View>
-
-				<View style={styles.body}>
+				<View onLayout={this._setMaxHeight.bind(this)}>
 					{this.props.children}
 				</View>
-
-			</View>
+			</Animated.View>
 		)
 	}
 }
-var styles = StyleSheet.create({
-	container: {
-		backgroundColor: '#fff',
-		margin: 10,
-		overflow: 'hidden'
-	},
-	titleContainer: {
-		flexDirection: 'row'
-	},
-	title: {
-		flex: 1,
-		padding: 10,
-		color: '#2a2f43',
-		fontWeight: 'bold'
-	},
-	button: {
-
-	},
-	buttonImage: {
-		width: 30,
-		height: 25
-	},
-	body: {
-		padding: 10,
-		paddingTop: 0
-	}
-});
-
 export default Panel
