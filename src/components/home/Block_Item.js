@@ -1,6 +1,6 @@
 import React from 'react'
 import { View, StyleSheet, Text, TouchableOpacity, Image } from 'react-native'
-import { DEVICE_W_percent, shadow, brandPrimary, brandSecondary, fontFamily } from '../../config/variables';
+import { DEVICE_W_percent, shadow, brandPrimary, brandSecondary, SourceSansPro_Regular, textColor } from '../../config/variables';
 import { Divider } from 'react-native-elements';
 import Ionicons from "react-native-vector-icons/Ionicons";
 
@@ -91,8 +91,8 @@ const stylesItem = StyleSheet.create({
   categories: { width: 70, height: 20, borderWidth: 1, borderRadius: 12, borderColor: brandSecondary },
   categoriesText: { fontSize: 13, lineHeight: 20, textAlign: 'center', color: brandSecondary },
   image: { width: IMG_W, height: IMG_H, resizeMode: 'cover' },
-  name: { lineHeight: 27, fontSize: 18, fontFamily: fontFamily, color: brandPrimary, fontWeight: '700' },
-  price: { lineHeight: 30, fontSize: 20, fontFamily: fontFamily, color: brandPrimary, fontWeight: '700' },
-  desc: { lineHeight: 24, fontSize: 16, fontFamily: fontFamily, color: '#a3a3a3' },
+  name: { lineHeight: 27, fontSize: 18, fontFamily: SourceSansPro_Regular, color: textColor, fontWeight: '700' },
+  price: { lineHeight: 30, fontSize: 20, fontFamily: SourceSansPro_Regular, color: textColor, fontWeight: '700' },
+  desc: { lineHeight: 24, fontSize: 16, fontFamily: SourceSansPro_Regular, color: '#a3a3a3' },
 });
 

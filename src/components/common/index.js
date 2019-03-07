@@ -1,8 +1,9 @@
 import MultiSelect from './MultiSelect'
-import Panel from './Panel'
+import DropdownMenu, { MenuItem } from './DropdownMenu'
 
 
 export {
     MultiSelect,
-    Panel,
+    DropdownMenu,
+    MenuItem,
 }

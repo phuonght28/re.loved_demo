@@ -25,7 +25,7 @@ export function getStatusBarHeight(skipAndroid = false) {
 export const navHeight = Header.HEIGHT + getStatusBarHeight() - 19;
 
 // Colors
-export const brandPrimary = '#000'; //'#2997d8';
+export const brandPrimary = '#841e20'; //'#2997d8';
 export const brandSecondary = '#d73636'; //'#2997d8';
 export const brandInfo = '#5F9EE7';
 export const brandSuccess = '#28871c';
@@ -70,15 +70,14 @@ if (PixelRatio.get() > 2) {
 // }
 
 export const fontSize = fontScal;
-export const inputFontSize = fontSize + 2;
-export const lineHeight = fontSize * 1.44;
-// export const fontSize = platform === 'ios' ? 12 : 14;
+export const lineHeight = fontSize * 1.5;
 export const fontSizeH1 = fontSize * 2.8;
 export const fontSizeH2 = fontSize * 2.4;
 export const fontSizeH3 = fontSize * 2;
 export const fontSizeH4 = fontSize * 1.5;
+export const inputFontSize = fontSize + 2;
 // Text
-export const textColor = "#000";
+export const textColor = "#a3a3a3";
 export const textDarkColor = "#000";
 export const textLightColor = "#666666";
 export const inverseTextColor = "#fff";
@@ -90,6 +89,15 @@ export const textH4 = { fontSize: fontSizeH4, };
 // Title
 export const titleFontSize = fontSize + 2;
 export const titleTextColor = "#0D3D74";
+
+
+export const textContent = {
+  color: textColor,
+  fontSize: fontSize,
+  lineHeight: lineHeight,
+  fontFamily: SourceSansPro_Regular
+}
+
 export const shadow = {
   elevation: 10,
   shadowColor: "#000",

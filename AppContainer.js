@@ -4,7 +4,7 @@ import { createAppContainer, createSwitchNavigator, createStackNavigator, create
 import { AsyncStorage, StatusBar, Button, Animated, TouchableHighlight, TouchableOpacity, View, ActivityIndicator } from 'react-native'
 import { Home } from './src/containers/Home'
 import { Account } from './src/containers/Account'
-import { Category, List } from './src/containers/Buy'
+import { Category, List, ItemDetail } from './src/containers/Buy'
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons"
 import Feather from "react-native-vector-icons/Feather"
 import SimpleLineIcons from "react-native-vector-icons/SimpleLineIcons"
@@ -177,20 +177,25 @@ const HomeStack = createStackNavigator(
 )
 const HangerStack = createStackNavigator(
   {
-    ListItem: {
-      screen: List,
-      navigationOptions: {
-        ...headerOptions,
-        title: 'Chanel'
-      }
-    },
     Category: {
       screen: Category,
       navigationOptions: {
         ...headerOptions,
         title: 'YOUR NEXT PRELOVED'
       }
-    }
+    },
+    ItemDetail: {
+      screen: ItemDetail,
+      navigationOptions: { header: null }
+    },
+    ListItem: {
+      screen: List,
+      navigationOptions: {
+        ...headerOptions,
+        title: 'YOUR NEXT PRELOVED'
+      }
+    },
+
   }
 )
 const SearchStack = {
