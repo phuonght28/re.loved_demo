@@ -14,7 +14,7 @@ export default Block_ListProducts = (props) => {
     <View>
       <ScrollView horizontal showsHorizontalScrollIndicator={false} >
         <View style={{ paddingVertical: 20, flexDirection: 'row' }} >
-          {dataList.map((item, index) => <Block_Item item={item} key={index} />)}
+          {dataList.map((item, index) => <Block_Item item={item} key={index} navigation={props.navigation} />)}
         </View>
       </ScrollView>
     </View>

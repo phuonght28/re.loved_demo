@@ -5,7 +5,7 @@ import { Block_Category, Block_ListProducts } from '../../components/home'
 import { homeStyle } from './style'
 import Feather from "react-native-vector-icons/Feather";
 import {
-  brandPrimary, brandLight, textLightColor, Bodoni_Bold,
+  textDarkColor, brandLight, textLightColor, Bodoni_Bold,
   isIphoneX, platform, DEVICE_WIDTH, DEVICE_W_percent, brandSecondary,
 } from '../../config/variables';
 
@@ -70,16 +70,16 @@ class Home extends React.Component {
         </Animated.View>
         <Animated.ScrollView style={{ flex: 1 }} scrollEventThrottle={1} onScroll={Animated.event([{ nativeEvent: { contentOffset: { y: this.state.scrollY } } }], { useNativeDriver: true })} contentInset={{ top: HEADER_MAX_HEIGHT, }} contentOffset={{ y: -HEADER_MAX_HEIGHT, }}   >
           <View style={homeStyle.searchContainer}>
-            <View style={homeStyle.searchBlock}>
-              <Feather name='search' style={{ color: brandPrimary, fontSize: 24 }} />
-              <TextInput placeholder='Search for your new reloved..' style={homeStyle.searchInput} placeholderTextColor={brandPrimary} />
-            </View>
+            <TouchableOpacity style={homeStyle.searchBlock} onPress={() => { this.props.navigation.navigate('Category') }}>
+              <Feather name='search' style={{ color: textDarkColor, fontSize: 24 }} />
+              <TextInput placeholder='Search for your new reloved..' style={homeStyle.searchInput} placeholderTextColor={textDarkColor} />
+            </TouchableOpacity>
           </View>
           <View style={stylesHeader.scrollViewContent}>
-            <Block_ListProducts dataList={PRODUCTS} />
-            <Block_ListProducts dataList={PRODUCTS} />
+            <Block_ListProducts dataList={PRODUCTS} navigation={this.props.navigation} />
+            <Block_ListProducts dataList={PRODUCTS} navigation={this.props.navigation} />
             <Block_Category />
-            <Block_ListProducts dataList={PRODUCTS} />
+            <Block_ListProducts dataList={PRODUCTS} navigation={this.props.navigation} />
           </View>
         </Animated.ScrollView>
       </View>

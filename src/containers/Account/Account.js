@@ -106,7 +106,7 @@ class Account extends React.Component {
                 <TouchableOpacity activeOpacity={1}>
                   <Text style={{
                     borderColor: '#D73636', borderWidth: 2, borderRadius: 16, fontWeight: '600',
-                     paddingHorizontal: 20, color: '#D73636', lineHeight: 30
+                    paddingHorizontal: 20, color: '#D73636', lineHeight: 30
                   }}>FOLLOW</Text>
                 </TouchableOpacity >
               </View>
@@ -118,18 +118,18 @@ class Account extends React.Component {
           </View>
         </Animated.ScrollView>
 
-        <Animated.View style={[styles.header, { transform: [{ translateY: headerTranslate }] }]} >
-          {/* <AnimatedFastImage
+        {/* <Animated.View style={[styles.header, { transform: [{ translateY: headerTranslate }] }]} >
+          <AnimatedFastImage
             style={[styles.backgroundImage, { opacity: imageOpacity, transform: [{ translateY: imageTranslate }] }]}
-            source={require('../../assets/profile_bg.jpg')} /> */}
-        </Animated.View>
-        <Animated.View style={[styles.barIcon, { transform: [{ scale: titleScale }, { translateY: titleTranslate }] }]}  >
+            source={require('../../assets/profile_bg.jpg')} />
+        </Animated.View> */}
+        {/* <Animated.View style={[styles.barIcon, { transform: [{ scale: titleScale }, { translateY: titleTranslate }] }]}  >
           <TouchableOpacity style={{ marginLeft: 10 }} onPress={() => { this.props.navigation.goBack() }}>
             <Ionicons name={'ios-arrow-back'} style={{ color: '#FFF', fontSize: 34 }} />
           </TouchableOpacity>
-        </Animated.View>
-        <Animated.View style={[styles.barIconRight, { transform: [{ translateY: titleTranslate }] }]}   >
-          <TouchableOpacity style={{ marginRight: 10 }} >
+        </Animated.View> */}
+        <Animated.View style={[styles.barIconRight, { transform: [{ scale: titleScale }, { translateY: titleTranslate }] }]}   >
+          <TouchableOpacity style={{ marginRight: 10 }} onPress={() => this.props.navigation.navigate('Basket')}>
             <SimpleLineIcons name={'handbag'} style={{ color: '#FFF', fontSize: 34 }} />
           </TouchableOpacity>
         </Animated.View>

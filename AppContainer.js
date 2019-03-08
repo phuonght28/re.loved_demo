@@ -1,13 +1,15 @@
 
 import React, { Component } from 'react'
 import { createAppContainer, createSwitchNavigator, createStackNavigator, createBottomTabNavigator } from 'react-navigation'
-import { AsyncStorage, StatusBar, Button, Animated, TouchableHighlight, TouchableOpacity, View, ActivityIndicator } from 'react-native'
+import { AsyncStorage, StatusBar, Button, Animated, TouchableHighlight, TouchableOpacity, View, ActivityIndicator, ImageBackground, StyleSheet } from 'react-native'
 import { Home } from './src/containers/Home'
 import { Account } from './src/containers/Account'
 import { Category, List, ItemDetail } from './src/containers/Buy'
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons"
 import Feather from "react-native-vector-icons/Feather"
 import SimpleLineIcons from "react-native-vector-icons/SimpleLineIcons"
+import Basket from './src/containers/Basket/Basket'
+import { BasketIcon } from './src/components/basket';
 
 import { shadowCustom } from './src/config/variables'
 
@@ -124,13 +126,15 @@ class MyTabBar extends Component {
 class SignInScreen extends React.Component {
   static navigationOptions = { title: 'Please sign in' }
   _signInAsync = async () => {
-    await AsyncStorage.setItem('userToken', 'abc')
+    // await AsyncStorage.setItem('userToken', 'abc')
     this.props.navigation.navigate('Main')
   }
   render() {
     return (
       <View style={{ flex: 1, justifyContent: 'center' }}>
-        <Button style={{ flex: 1 }} title="Sign in!" onPress={this._signInAsync} />
+        <TouchableOpacity activeOpacity={1} style={{ flex: 1 }} onPress={this._signInAsync}>
+          <ImageBackground style={[StyleSheet.absoluteFill]} source={require('./src/assets/auth_landing.jpg')} />
+        </TouchableOpacity>
       </View>
     )
   }
@@ -162,12 +166,7 @@ const headerOptions = {
   headerStyle: {
     borderBottomWidth: 0.5,
     backgroundColor: '#FFF',
-  },
-  headerRight: (
-    <TouchableOpacity style={{ paddingHorizontal: 20, alignItems: 'center' }}>
-      <SimpleLineIcons name={'handbag'} style={{ color: '#000', fontSize: 28 }} />
-    </TouchableOpacity>
-  )
+  }
 }
 const HomeStack = createStackNavigator(
   {
@@ -175,32 +174,52 @@ const HomeStack = createStackNavigator(
   },
   { headerMode: "none", }
 )
+// const HangerStack = {
+//   screen: () => null,
+// }
 const HangerStack = createStackNavigator(
+  {
+    Buy: {
+      screen: List,
+      navigationOptions: ({ navigation }) => {
+        return {
+          ...headerOptions,
+          title: 'YOUR NEXT PRELOVED',
+          headerRight: <BasketIcon navigation={navigation} />
+        }
+      }
+    }
+  }
+)
+const SearchStack = createStackNavigator(
   {
     Category: {
       screen: Category,
-      navigationOptions: {
-        ...headerOptions,
-        title: 'YOUR NEXT PRELOVED'
+      navigationOptions: ({ navigation }) => {
+        return {
+          ...headerOptions,
+          title: 'YOUR NEXT PRELOVED',
+          headerRight: <BasketIcon navigation={navigation} />
+        }
       }
     },
+    ListItem: {
+      screen: List,
+      navigationOptions: ({ navigation }) => {
+        return {
+          ...headerOptions,
+          title: 'YOUR NEXT PRELOVED',
+          headerRight: <BasketIcon navigation={navigation} />
+        }
+      }
+    },
+
     ItemDetail: {
       screen: ItemDetail,
       navigationOptions: { header: null }
     },
-    ListItem: {
-      screen: List,
-      navigationOptions: {
-        ...headerOptions,
-        title: 'YOUR NEXT PRELOVED'
-      }
-    },
-
   }
 )
-const SearchStack = {
-  screen: () => null,
-}
 const NotificationStack = createStackNavigator(
   {
     NotificationScreen: { screen: OtherScreen }
@@ -222,7 +241,7 @@ const MainStack = createBottomTabNavigator(
     Account: AccountStack,
   },
   {
-    initialRouteName: 'Hanger',
+    // initialRouteName: 'Hanger',
     defaultNavigationOptions: ({ navigation }) => ({
       // tabBarComponent: MyTabBar,
       animationEnabled: false,
@@ -253,7 +272,23 @@ const MainStack = createBottomTabNavigator(
               routeName === 'Notification' ? 'bell' : 'account-outline'
 
         if (routeName === 'Search') {
-          return <SearchRouterButton />
+          // return <SearchRouterButton />
+          return (
+            <View style={{
+              position: 'absolute',
+              alignItems: 'center',
+              backgroundColor: '#841e20',
+              borderColor: '#f1f1f1',
+              alignItems: 'center',
+              justifyContent: 'center',
+              width: SIZE,
+              height: SIZE,
+              borderRadius: SIZE / 2,
+              marginBottom: 25,
+            }}>
+              <Feather name={'search'} style={{ color: '#FFF', backgroundColor: '#841e20', fontSize: 36 }} />
+            </View>
+          )
         }
         // else if (routeName === 'Hanger') {
         //   return <HangerRouterButton />
@@ -268,17 +303,32 @@ const AuthStack = createStackNavigator({
   SignIn: { screen: SignInScreen, navigationOptions: { header: null } },
 })
 
+const BasketStack = createStackNavigator({
+  Basket: { screen: Basket, navigationOptions: headerOptions }
+})
 
-
-export default createAppContainer(createSwitchNavigator(
+const AppContainer = createStackNavigator(
   {
-    Auth: AuthStack,
-    Main: MainStack,
+    MainNavigator: createSwitchNavigator(
+      {
+        Auth: AuthStack,
+        Main: MainStack,
+      },
+      {
+        initialRinitialRouteName: 'Main',
+        headerMode: 'none',
+      }
+    ),
+    Basket: BasketStack,
+
   },
   {
     defaultNavigationOptions: { header: null },
-    initialRouteName: 'Main',
+    initialRouteName: 'MainNavigator',
   }
-))
+)
+
+export default createAppContainer(AppContainer)
+
 
 

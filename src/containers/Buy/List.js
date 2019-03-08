@@ -2,7 +2,7 @@ import React from 'react'
 import { View, FlatList } from 'react-native'
 import { PRODUCTS } from '../../fakeApi/product'
 import { DEVICE_W_percent } from '../../config/variables'
-import Block_Item from '../../components/common/Block_Item'
+import Block_Item_Buy from '../../components/common/Block_Item_Buy'
 
 
 class ListItem extends React.Component {
@@ -13,7 +13,7 @@ class ListItem extends React.Component {
           <FlatList
             numColumns={2}
             data={PRODUCTS}
-            renderItem={(item) => (<Block_Item onPress={() => { this.props.navigation.navigate('ItemDetail') }} item={item} key={item.key} />)}
+            renderItem={({ item }) => (<Block_Item_Buy onPress={() => { this.props.navigation.navigate('ItemDetail') }} item={item} />)}
             keyExtractor={item => item.key}
           />
         </View>
