@@ -6,7 +6,7 @@ import { homeStyle } from './style'
 import Feather from "react-native-vector-icons/Feather";
 import {
   textDarkColor, brandLight, textLightColor, Bodoni_Bold,
-  isIphoneX, platform, DEVICE_WIDTH, DEVICE_W_percent, brandSecondary,
+  isIphoneX, platform, DEVICE_WIDTH, DEVICE_W_percent, brandSecondary, shadow,
 } from '../../config/variables';
 
 const STATUSBAR_PADDING = isIphoneX ? 24 : 0
@@ -21,7 +21,6 @@ class Home extends React.Component {
     detailBuilding: null,
     isFetching: true,
     scrollY: new Animated.Value(
-      // iOS has negative initial scroll value because content inset...
       platform === 'ios' ? -HEADER_MAX_HEIGHT : 0,
     ),
     refreshing: false,
@@ -49,17 +48,6 @@ class Home extends React.Component {
       extrapolate: 'clamp',
     });
 
-    const titleScale = scrollY.interpolate({
-      inputRange: [0, HEADER_SCROLL_DISTANCE / 2, HEADER_SCROLL_DISTANCE],
-      outputRange: [1, 1, 0.8],
-      extrapolate: 'clamp',
-    });
-    const titleTranslate = scrollY.interpolate({
-      inputRange: [0, HEADER_SCROLL_DISTANCE / 2, HEADER_SCROLL_DISTANCE],
-      outputRange: [0, 0, -8],
-      extrapolate: 'clamp',
-    });
-
     return (
       <View style={homeStyle.container} >
         <Animated.View style={[stylesHeader.header, { transform: [{ translateY: headerTranslate }] }]}   >
@@ -69,7 +57,7 @@ class Home extends React.Component {
           </View>
         </Animated.View>
         <Animated.ScrollView style={{ flex: 1 }} scrollEventThrottle={1} onScroll={Animated.event([{ nativeEvent: { contentOffset: { y: this.state.scrollY } } }], { useNativeDriver: true })} contentInset={{ top: HEADER_MAX_HEIGHT, }} contentOffset={{ y: -HEADER_MAX_HEIGHT, }}   >
-          <View style={homeStyle.searchContainer}>
+          <View style={[homeStyle.searchContainer, shadow]}>
             <TouchableOpacity style={homeStyle.searchBlock} onPress={() => { this.props.navigation.navigate('Category') }}>
               <Feather name='search' style={{ color: textDarkColor, fontSize: 24 }} />
               <TextInput placeholder='Search for your new reloved..' style={homeStyle.searchInput} placeholderTextColor={textDarkColor} />

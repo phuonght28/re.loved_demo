@@ -214,10 +214,10 @@ const SearchStack = createStackNavigator(
       }
     },
 
-    ItemDetail: {
-      screen: ItemDetail,
-      navigationOptions: { header: null }
-    },
+    // ItemDetail: {
+    //   screen: ItemDetail,
+    //   navigationOptions: { header: null }
+    // },
   }
 )
 const NotificationStack = createStackNavigator(
@@ -306,6 +306,17 @@ const AuthStack = createStackNavigator({
 const BasketStack = createStackNavigator({
   Basket: { screen: Basket, navigationOptions: headerOptions }
 })
+const ItemDetailStack = createStackNavigator({
+  ItemDetail: {
+    screen: ItemDetail,
+    navigationOptions: {
+      ...headerOptions,
+      header: null
+    }
+  }
+})
+
+
 
 const AppContainer = createStackNavigator(
   {
@@ -320,6 +331,7 @@ const AppContainer = createStackNavigator(
       }
     ),
     Basket: BasketStack,
+    ItemDetail: ItemDetailStack,
 
   },
   {

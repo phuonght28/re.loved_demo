@@ -1,7 +1,7 @@
 
 import { StyleSheet } from 'react-native'
 import {
-  brandPrimary, HEADER_MAX_HEIGHT, textLightColor, Bodoni_Bold,
+  textDarkColor, HEADER_MAX_HEIGHT, textLightColor, Bodoni_Bold,
   isIphoneX, platform, DEVICE_WIDTH, DEVICE_W_percent, fontFamily,
 } from '../../config/variables';
 import { colors } from 'react-native-elements';
@@ -50,6 +50,6 @@ export const homeStyle = StyleSheet.create({
     paddingHorizontal: 20,
     fontFamily: fontFamily,
     fontSize: 16,
-    color: brandPrimary
+    color: textDarkColor
   },
 })

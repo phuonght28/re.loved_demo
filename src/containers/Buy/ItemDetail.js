@@ -11,6 +11,17 @@ const HEADER_SCROLL_DISTANCE = HEADER_MAX_HEIGHT - HEADER_MIN_HEIGHT;
 const AnimatedFastImage = Animated.createAnimatedComponent(Image)
 
 class ItemDetail extends React.Component {
+  static navigationOptions = ({ navigation }) => {
+    return {
+      title: 'BASKET',
+      headerLeft: (
+        <TouchableOpacity onPress={() => navigation.goBack(null)}
+          style={{ paddingHorizontal: 10, alignItems: 'center' }}>
+          <Icon.MaterialCommunityIcons name={"close"} style={{ color: '#000', fontSize: 28 }} />
+        </TouchableOpacity>
+      ),
+    }
+  }
   state = {
     detailBuilding: null,
     isFetching: true,
@@ -21,8 +32,6 @@ class ItemDetail extends React.Component {
   }
 
   render() {
-    // Because of content inset the scroll value will be negative on iOS so bring
-    // it back to 0.
     const scrollY = Animated.add(
       this.state.scrollY,
       platform === 'ios' ? HEADER_MAX_HEIGHT : 0,
@@ -32,7 +41,6 @@ class ItemDetail extends React.Component {
       outputRange: [0, -HEADER_SCROLL_DISTANCE],
       extrapolate: 'clamp',
     })
-
     const imageOpacity = scrollY.interpolate({
       inputRange: [0, HEADER_SCROLL_DISTANCE / 2, HEADER_SCROLL_DISTANCE],
       outputRange: [1, 1, 0],
@@ -41,12 +49,6 @@ class ItemDetail extends React.Component {
     const imageTranslate = scrollY.interpolate({
       inputRange: [0, HEADER_SCROLL_DISTANCE],
       outputRange: [0, 100],
-      extrapolate: 'clamp',
-    })
-
-    const titleScale = scrollY.interpolate({
-      inputRange: [0, HEADER_SCROLL_DISTANCE / 2, HEADER_SCROLL_DISTANCE],
-      outputRange: [1, 1, 0.8],
       extrapolate: 'clamp',
     })
     const titleTranslate = scrollY.interpolate({
@@ -67,7 +69,7 @@ class ItemDetail extends React.Component {
           contentOffset={{ y: -HEADER_MAX_HEIGHT, }}
         >
           <View style={styles.scrollViewContent}>
-            <View style={styles.blockContainer}>
+            <View style={[styles.blockContainer, shadow]}>
               <View style={[shadowCustom({ offset: { width: 0, height: -1 } }), { alignSelf: 'center', width: 100, height: 5, borderRadius: 5, backgroundColor: '#D73636', marginBottom: 20 }]}></View>
 
               <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-between', marginBottom: 20, marginHorizontal: 15 }} >
@@ -75,12 +77,7 @@ class ItemDetail extends React.Component {
                   <Text style={{ fontSize: 18, lineHeight: 30 }}>DIOR</Text>
                   <Text style={{ color: '#cccccc' }}>Iconic Handbag</Text>
                 </View>
-                <TouchableOpacity activeOpacity={1}>
-                  <Text style={{
-                    borderColor: '#D73636', borderWidth: 2, borderRadius: 16, fontWeight: '600',
-                    paddingHorizontal: 20, color: '#D73636', lineHeight: 30
-                  }}>FOLLOW</Text>
-                </TouchableOpacity >
+
               </View>
               <Text> </Text>
               <Text> ut labore et dolore magna aliqua.Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Show more...</Text>
@@ -127,11 +124,11 @@ class ItemDetail extends React.Component {
         <Animated.View style={[styles.header, { transform: [{ translateY: headerTranslate }] }]} >
           <AnimatedFastImage
             style={[styles.backgroundImage, { opacity: imageOpacity, transform: [{ translateY: imageTranslate }] }]}
-            source={require('../../assets/large-chanel-handbag2.jpg')} />
+            source={require('../../assets/buy_03.jpg')} />
         </Animated.View>
 
         <Animated.View style={[styles.barIcon, { transform: [{ translateY: titleTranslate }] }]}  >
-          <TouchableOpacity style={{ marginLeft: 20 }} onPress={() => { this.props.navigation.goBack() }}>
+          <TouchableOpacity style={{ marginLeft: 20 }} onPress={() => this.props.navigation.goBack(null)}>
             <Icon.Ionicons name={'ios-arrow-back'} style={{ color: '#000', fontSize: 34 }} />
           </TouchableOpacity>
         </Animated.View>
@@ -150,12 +147,11 @@ class ItemDetail extends React.Component {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#FFF',
+    backgroundColor: '#F4F4F4',
     flex: 1,
   },
   blockContainer: {
     backgroundColor: '#FFF',
-    ...shadow,
     padding: 15,
     marginHorizontal: 8,
     marginBottom: 15,
