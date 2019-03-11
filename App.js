@@ -60,7 +60,7 @@ export default class App extends React.Component {
       }),
     ])
   }
-  bodoni_svtytwo_itc_tt_bold
+
 
   _handleLoadingError = error => {
     console.warn(error)
